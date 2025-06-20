@@ -1,4 +1,4 @@
-.PHONY: all run test clean fmt build
+.PHONY: all run clean fmt build
 
 all: run
 
@@ -6,10 +6,6 @@ all: run
 run:
 	@echo "Running the project..."
 	go run ./cmd/main.go
-
-test:
-	@echo "Running tests..."
-	go test ./...
 
 build:
 	@echo "Building the project..."

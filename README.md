@@ -60,31 +60,8 @@ goexpert-client-server-api/
 | ------------ | ---------------------------------------------------------- |
 | `make run`   | Executa o servidor e o cliente (exemplo de uso completo).  |
 | `make build` | Compila o projeto e gera o binário dentro da pasta `bin/`. |
-| `make test`  | Executa os testes unitários do projeto.                    |
 | `make fmt`   | Formata o código-fonte utilizando `go fmt`.                |
 | `make clean` | Remove artefatos de build, como a pasta `bin/`.            |
-
----
-
-## 🛠️ Como Executar Manualmente (Sem Makefile)
-
-### 1. Inicie o servidor (porta 8080):
-
-```bash
-go run cmd/main.go
-```
-
-_(O servidor ficará escutando o endpoint `/cotacao`)_
-
----
-
-### 2. Execute o cliente (em outro terminal):
-
-```bash
-go run pkg/client/client.go
-```
-
-_(O cliente fará a requisição e salvará o resultado no arquivo `cotacao.txt`)_
 
 ---
 
