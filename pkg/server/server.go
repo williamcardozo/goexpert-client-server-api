@@ -1,28 +1,28 @@
 package server
 
 import (
-	"context"
 	"encoding/json"
 	"log"
 	"net/http"
-	"time"
 
 	exchangerate "github.com/williamcardozo/goexpert-client-server-api/pkg/exchange-rate"
+	"github.com/williamcardozo/goexpert-client-server-api/pkg/models"
 )
 
 func getExchangeRateHandler(w http.ResponseWriter, r *http.Request) {
-	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
-	defer cancel()
-
-	bid, err := exchangerate.GetExchangeRateBID(ctx)
+	bid, err := exchangerate.GetExchangeRateBID()
 	if err != nil {
 		log.Printf("Erro ao buscar cotação: %v", err)
 		http.Error(w, "Erro ao buscar cotação", http.StatusInternalServerError)
 		return
 	}
 
+	resp := models.ExchangeRateResponse{
+		Bid: bid,
+	}
+	
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"bid": bid})
+	json.NewEncoder(w).Encode(resp)
 }
 
 func InitServer() {
@@ -30,5 +30,4 @@ func InitServer() {
 
 	log.Println("Servidor iniciado na porta 8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
-	return
 }

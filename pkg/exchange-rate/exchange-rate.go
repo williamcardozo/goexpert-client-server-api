@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 
 	"github.com/williamcardozo/goexpert-client-server-api/pkg/db"
 	"github.com/williamcardozo/goexpert-client-server-api/pkg/models"
@@ -39,11 +40,14 @@ func getExchangeRate(ctx context.Context) (*models.ExchangeRate, error) {
 	return exchange, nil
 }
 
-func GetExchangeRateBID(ctx context.Context) (string, error) {
+func GetExchangeRateBID() (string, error) {
 	database, err := db.NewDatabase()
 	if err != nil {
 		return "", fmt.Errorf("erro ao inicializar banco de dados: %w", err)
 	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 200 * time.Millisecond)
+	defer cancel()
 
 	exchange, err := getExchangeRate(ctx)
 	if err != nil {

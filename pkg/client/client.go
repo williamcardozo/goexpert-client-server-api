@@ -9,11 +9,9 @@ import (
 	"net/http"
 	"os"
 	"time"
-)
 
-type ExchangeRateResponse struct {
-	Bid string `json:"bid"`
-}
+	"github.com/williamcardozo/goexpert-client-server-api/pkg/models"
+)
 
 func FetchExchangeRate() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 300*time.Millisecond)
@@ -45,9 +43,9 @@ func FetchExchangeRate() error {
 		return fmt.Errorf("erro ao buscar cotação: %s", err)
 	}
 
-	exchangeRateResponse := ExchangeRateResponse{}
+	exchangeRateResponse := models.ExchangeRateResponse{}
 	if err := json.Unmarshal(body, &exchangeRateResponse); err != nil {
-		return fmt.Errorf("erro ao formatar response", err)
+		return fmt.Errorf("erro ao formatar response: %w", err)
 	}
 	formattedBid := fmt.Sprintf("Dólar: %s", exchangeRateResponse.Bid)
 

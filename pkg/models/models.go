@@ -1,5 +1,9 @@
 package models
 
+type ExchangeRateResponse struct {
+	Bid string `json:"bid"`
+}
+
 type ExchangeRate struct {
 	USDBRL struct {
 		Code       string `json:"code"`

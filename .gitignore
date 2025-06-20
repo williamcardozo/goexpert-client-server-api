@@ -31,3 +31,4 @@ cotacao.db
 cotacao.txt
 
 .idea/*
+*.idea/
