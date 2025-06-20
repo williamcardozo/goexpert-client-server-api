@@ -10,7 +10,7 @@ run:
 test:
 	@echo "Running tests..."
 	go test ./...
-	
+
 build:
 	@echo "Building the project..."
 	go build -o bin/main ./cmd
