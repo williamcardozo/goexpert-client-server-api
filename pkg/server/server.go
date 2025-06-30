@@ -20,14 +20,15 @@ func getExchangeRateHandler(w http.ResponseWriter, r *http.Request) {
 	resp := models.ExchangeRateResponse{
 		Bid: bid,
 	}
-	
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(resp)
 }
 
-func InitServer() {
+func InitServer(ready chan<- struct{}) error {
 	http.HandleFunc("/cotacao", getExchangeRateHandler)
 
 	log.Println("Servidor iniciado na porta 8080...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	ready <- struct{}{}
+	return http.ListenAndServe(":8080", nil)
 }
