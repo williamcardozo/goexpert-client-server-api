@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -30,5 +31,13 @@ func InitServer(ready chan<- struct{}) error {
 
 	log.Println("Servidor iniciado na porta 8080...")
 	ready <- struct{}{}
-	return http.ListenAndServe(":8080", nil)
+
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Printf("Erro ao iniciar servidor: %v", err)
+		ready <- struct{}{}
+		return fmt.Errorf("erro ao iniciar servidor: %w", err)
+	}
+	ready <- struct{}{}
+	return nil
 }
